@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@theme {
+  /* This defines your custom colors so 'from-dark-100' works */
+  --color-dark-100: #1A1A1A;
+  --color-dark-200: #252525;
+  --color-dark-300: #303030;
+  --color-dark-400: #3A3A3A;
+  --color-dark: #0F0F0F;
+
+  --color-primary: #FF2E63;
+  --color-primary-dark: #E62859;
+  --color-primary-hover: #FF4A7C;
+
+  /* Add your gradients */
+  --background-image-hero-gradient: linear-gradient(135deg, #0F0F0F 0%, #1A1A1A 100%);
+}
+
+:root {
+  --color-dark: #020204;
+  --color-dark-100: #1A1A1A;
+  --color-dark-200: #252525;
+  --color-primary: #FF2E63;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-dark);
+  color: #e0e0e0;
+  font-family: var(--font-google-sans-flex);
+  line-height: 1.6;
+}
+
+@layer components {
+  .section {
+    @apply py-20 px-4 sm:px-6 lg:px-8;
+  }
+
+  .card {
+    @apply rounded-2xl p-6 bg-linear-to-br from-dark-100 to-dark border border-dark-200;
+  }
+
+  .btn {
+    @apply px-6 py-3 rounded-xl font-medium transition-all duration-300;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-primary-dark;
+  }
+
+  .btn-outline {
+    @apply border-2 border-primary text-primary hover:bg-primary/10;
+  }
+
+  .mainheadingfont {
+    font-family: var(--font-poppins) !important;
+  }
+
+  .heading {
+    @apply text-4xl md:text-5xl font-semibold text-white mb-4;
+  }
+}
+
+/* Custom gradient utilities that Tailwind might not generate automatically */
+@layer utilities {
+  .bg-navbar-gradient {
+    background: linear-gradient(90deg, var(--color-dark) 0%, var(--color-dark-100) 100%);
+  }
+}
