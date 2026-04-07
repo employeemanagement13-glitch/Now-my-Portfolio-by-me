@@ -26,7 +26,7 @@ export function FAQAccordion({ faqs }: { faqs: FAQItem[] }) {
               id={`faq-question-${index}`}
               aria-expanded={isOpen}
               aria-controls={`faq-answer-${index}`}
-              className={`flex items-center justify-between w-full text-left px-5 py-4 cursor-pointer rounded-full transition-all duration-300 ${
+              className={`flex items-center justify-between w-full text-left px-5 py-4 max-sm:py-5 cursor-pointer rounded-full transition-all duration-300 ${
                 isOpen ? "bg-[#1c1c1c] mb-5" : "bg-transparent"
               }`}
               onClick={() => setActiveIndex(isOpen ? null : index)}
