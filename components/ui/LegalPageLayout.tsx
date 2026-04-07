@@ -68,7 +68,7 @@ export function LegalPageLayout({
 
             <h1
               className={[
-                "mainheadingfont font-bold text-white leading-tight",
+                "font-semibold text-white leading-tight",
                 // Fluid title size: 28px mobile → 36px sm → 48px md+
                 "text-[1.75rem] sm:text-4xl md:text-5xl",
                 "mb-3 sm:mb-4",
