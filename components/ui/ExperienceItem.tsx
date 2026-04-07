@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { AsteriskIcon } from "@/components/Experience";
 
 interface ExperienceItemProps {
@@ -16,45 +16,26 @@ interface ExperienceItemProps {
 }
 
 export function ExperienceItem({ exp }: ExperienceItemProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-
-  // Handle both hover and click interactions
-  const handleInteraction = () => {
-    setIsExpanded(!isExpanded);
-  };
-
-  // Reset expanded state on mobile when window resizes
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 640) {
-        setIsExpanded(false);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   return (
     <button
       type="button"
-      aria-expanded={isExpanded || isHovered}
-      aria-label={`${exp.title} at ${exp.company}. Click to ${isExpanded ? 'collapse' : 'expand'} description`}
+      aria-expanded={isHovered}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onFocus={() => setIsHovered(true)}
       onBlur={() => setIsHovered(false)}
-      onClick={handleInteraction}
+      onClick={() => setIsHovered(!isHovered)}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
-          setIsExpanded(!isExpanded);
+          setIsHovered(!isHovered);
         }
       }}
       className="relative rounded-2xl cursor-pointer transition-all duration-300 ease-in-out mx-auto outline-none focus-visible:ring-2 focus-visible:ring-purple-500/50 w-full text-left border-none block"
       style={{
-        background: (isExpanded || isHovered) ? "rgba(255,255,255,0.04)" : "transparent",
+        background: isHovered ? "rgba(255,255,255,0.04)" : "transparent",
         padding: "20px 0px",
       }}
     >
@@ -66,14 +47,14 @@ export function ExperienceItem({ exp }: ExperienceItemProps) {
           <div
             className="relative shrink-0 transition-all duration-300 scale-90 sm:scale-100"
             style={{
-              filter: (isExpanded || isHovered) ? `drop-shadow(0 0 14px ${exp.glowColor})` : "none",
+              filter: isHovered ? `drop-shadow(0 0 14px ${exp.glowColor})` : "none",
             }}
           >
-            {/* Ring on hover/expansion */}
+            {/* Ring on hover */}
             <div
               className="absolute inset-0 rounded-full transition-all duration-300"
               style={{
-                boxShadow: (isExpanded || isHovered)
+                boxShadow: isHovered
                   ? `0 0 0 3px ${exp.ringColor}`
                   : "0 0 0 0px transparent",
               }}
@@ -105,18 +86,18 @@ export function ExperienceItem({ exp }: ExperienceItemProps) {
         </div>
       </div>
 
-      {/* Expandable description - Always visible on mobile, hover on desktop */}
+      {/* Expandable description — slides down on hover */}
       <div
-        className="overflow-hidden px-[40px] transition-all duration-500 ease-in-out sm:px-[40px]"
+        className="overflow-hidden px-[40px] transition-all duration-500 ease-in-out"
         style={{
-          maxHeight: (isExpanded || isHovered || window.innerWidth < 640) ? "300px" : "0px",
-          opacity: (isExpanded || isHovered || window.innerWidth < 640) ? 1 : 0,
+          maxHeight: isHovered ? "180px" : "0px",
+          opacity: isHovered ? 1 : 0,
         }}
       >
         <p
           className="text-gray-400 text-sm leading-relaxed pt-4 sm:pl-20 pr-2 transition-transform duration-500 ease-in-out"
           style={{
-            transform: (isExpanded || isHovered || window.innerWidth < 640) ? "translateY(0)" : "translateY(-10px)",
+            transform: isHovered ? "translateY(0)" : "translateY(-10px)",
           }}
         >
           {exp.description}
