@@ -13,6 +13,7 @@
     "@sendgrid/mail": "^8.1.6",
     "@supabase/ssr": "^0.10.0",
     "@supabase/supabase-js": "^2.101.1",
+    "@vercel/speed-insights": "^2.0.0",
     "@zerobounce/zero-bounce-sdk": "^2.0.11",
     "date-fns": "^4.1.0",
     "dotenv": "^17.4.0",
