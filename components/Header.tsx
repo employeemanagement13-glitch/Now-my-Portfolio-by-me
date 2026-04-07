@@ -146,10 +146,8 @@ export default function Header() {
       {/* ── MOBILE NAVBAR ── */}
       <nav className="md:hidden w-[92%] sm:w-[80%] mx-auto">
         <div className="bg-[#151517] border border-[#252525] rounded-full flex items-center justify-between px-3 py-2.5">
-          <div className="w-10 h-10 rounded-full bg-linear-to-br from-purple-600 via-pink-500 to-red-400 flex items-center justify-center">
-            <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" />
-            </svg>
+          <div className="w-10 h-10 rounded-full bg-linear-to-br from-purple-900 via-red-500 to-red-400 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-shrimp-icon lucide-shrimp"><path d="M11 12h.01" /><path d="M13 22c.5-.5 1.12-1 2.5-1-1.38 0-2-.5-2.5-1" /><path d="M14 2a3.28 3.28 0 0 1-3.227 1.798l-6.17-.561A2.387 2.387 0 1 0 4.387 8H15.5a1 1 0 0 1 0 13 1 1 0 0 0 0-5H12a7 7 0 0 1-7-7V8" /><path d="M14 8a8.5 8.5 0 0 1 0 8" /><path d="M16 16c2 0 4.5-4 4-6" /></svg>
           </div>
 
           <div className="flex items-center gap-2">
