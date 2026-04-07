@@ -1,6 +1,7 @@
 // app/layout.tsx
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { googleSansFlex } from "./ui/font";
 import "./globals.css";
 
@@ -79,6 +80,7 @@ export default function RootLayout({
         </head>
         <body className={`${googleSansFlex.className} min-h-full flex flex-col`}>
           {children}
+          <SpeedInsights />
         </body>
       </html>
     </ClerkProvider>
