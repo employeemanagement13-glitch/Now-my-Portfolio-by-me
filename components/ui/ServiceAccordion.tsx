@@ -24,7 +24,7 @@ export function ServiceAccordion({ services }: { services: ServiceItem[] }) {
             {/* Row header */}
             <button
               type="button"
-              className="w-full flex items-center justify-between py-5 px-1 cursor-pointer text-left bg-transparent outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded-lg transition-colors duration-200 focus:outline-none min-w-0"
+              className="w-full flex items-center justify-between py-5 px-1 cursor-pointer text-left bg-transparent outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded-lg transition-colors duration-200 max-sm:duration-300 focus:outline-none min-w-0"
               onClick={() => setExpandedService(isOpen ? null : index)}
               aria-expanded={isOpen}
               aria-controls={`service-content-${index}`}
