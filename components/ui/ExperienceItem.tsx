@@ -111,7 +111,7 @@ export function ExperienceItem({ exp }: ExperienceItemProps) {
           min-w-0 + flex-1 lets it compress so the period badge always fits
           on ≥500px without overflow.
         */}
-        <div className="flex flex-row items-center gap-3 sm:gap-5 min-w-0 flex-1 w-full [@media(min-width:500px)]:w-auto">
+        <div className="sm:max-w-fit flex flex-row items-center gap-3 sm:gap-5 min-w-0 flex-1 w-full [@media(min-width:500px)]:w-auto">
 
           {/* Icon with glow + ring */}
           <div
@@ -142,11 +142,11 @@ export function ExperienceItem({ exp }: ExperienceItemProps) {
           </div>
 
           {/* Title + Company */}
-          <div className="min-w-0 flex-1">
-            <h3 className="text-[1.05rem] [@media(min-width:500px)]:text-xl sm:text-2xl md:text-3xl font-semibold text-white leading-tight break-words">
+          <div className="sm:min-w-fit min-w-0 flex-1">
+            <h3 className="sm:w-fit text-[1.05rem] [@media(min-width:500px)]:text-xl sm:text-2xl md:text-3xl font-semibold text-white leading-tight break-words">
               {exp.title}
             </h3>
-            <p className="text-gray-400 text-xs sm:text-sm mt-0.5 truncate">
+            <p className="text-gray-400 text-xs sm:text-sm mt-0.5 truncate sm:w-fit">
               {exp.company}
             </p>
           </div>
