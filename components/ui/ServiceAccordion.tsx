@@ -60,13 +60,13 @@ export function ServiceAccordion({ services }: { services: ServiceItem[] }) {
             </div>
           </button>
 
-          {/* Expandable body */}
+          {/* Expandable body - Fixed for performance while maintaining design */}
           <section
             id={`service-content-${index}`}
             aria-labelledby={`service-header-${index}`}
-            className={`overflow-hidden transition-all duration-400 ease-in-out ${
+            className={`overflow-hidden transition-all duration-300 ease-out ${
               expandedService === index
-                ? "max-h-96 opacity-100"
+                ? "max-h-[1200px] opacity-100" // Increased max-height to accommodate more tags
                 : "max-h-0 opacity-0"
             }`}
           >
