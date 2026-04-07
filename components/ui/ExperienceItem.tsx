@@ -17,19 +17,13 @@ interface ExperienceItemProps {
 
 export function ExperienceItem({ exp }: ExperienceItemProps) {
   const [isOpen, setIsOpen] = useState(false);
-
-  // Track whether the last interaction was touch so we never
-  // let a synthetic mouseover from iOS fire a ghost hover state.
   const isTouchRef = useRef(false);
-
-  // ── Handlers ────────────────────────────────────────────────────────────────
 
   const handleTouchStart = useCallback(() => {
     isTouchRef.current = true;
   }, []);
 
   const handleMouseEnter = useCallback(() => {
-    // Ignore synthetic mouse events that fire after touch on iOS
     if (isTouchRef.current) return;
     setIsOpen(true);
   }, []);
@@ -50,24 +44,16 @@ export function ExperienceItem({ exp }: ExperienceItemProps) {
   }, []);
 
   const handleClick = useCallback(() => {
-    // On touch devices this is the only interaction — pure toggle.
-    // On mouse devices this is a secondary affordance (clicking pins it open).
     setIsOpen((prev) => !prev);
-    // Reset touch flag after click so next mouse interaction works normally
     isTouchRef.current = false;
   }, []);
 
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        setIsOpen((prev) => !prev);
-      }
-    },
-    []
-  );
-
-  // ── Render ──────────────────────────────────────────────────────────────────
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      setIsOpen((prev) => !prev);
+    }
+  }, []);
 
   return (
     <button
@@ -81,51 +67,53 @@ export function ExperienceItem({ exp }: ExperienceItemProps) {
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       className={[
-        // Full width, left-aligned text, block-level
         "relative w-full text-left block",
-        // Shape & chrome reset
         "rounded-2xl border-none outline-none cursor-pointer",
-        // Focus ring (keyboard nav)
         "focus-visible:ring-2 focus-visible:ring-purple-500/50",
-        // Background fades in — same effect as original
         "transition-colors duration-300 ease-in-out",
-        // Padding: consistent horizontal padding on ALL screen sizes.
-        // Original had padding:"20px 0px" + inner px-4 fighting each other.
-        // Unified here: py-5 vertical, px-4 horizontal (matches inner px-4 intent).
+        // Unified padding — no inner div fighting outer padding
         "py-5 px-4 sm:px-5",
       ].join(" ")}
       style={{
         background: isOpen ? "rgba(255,255,255,0.04)" : "transparent",
       }}
     >
-      {/* ── Main row ──────────────────────────────────────────────────────── */}
+      {/* ── Main row ────────────────────────────────────────────────────── */}
       {/*
-        Layout:
-        - All screens: single row, items-center, space-between
-        - The original used flex-col on mobile (stacking icon+title above period)
-          which broke the "do not change layout" rule between views.
-        - Using a single flex-row at all sizes keeps desktop layout on mobile too.
-        - flex-nowrap prevents mid-width wrapping chaos.
-        - No justify-around (dead zones) — use justify-between instead.
+        Two layouts controlled by a single CSS class swap:
+
+        < 500px  → flex-col: icon+title on row 1, period badge on row 2
+                   This prevents any horizontal overflow on narrow phones.
+
+        ≥ 500px  → flex-row items-center justify-between: identical to desktop.
+                   Period badge stays inline to the right.
+
+        Tailwind doesn't have a built-in 500px breakpoint, so we add
+        `[@media(min-width:500px)]:flex-row` etc. inline via arbitrary values.
+        This is standard Tailwind v3 arbitrary-variant syntax.
       */}
-      <div className="flex flex-row items-center justify-between gap-3 sm:gap-4 w-full">
-
-        {/* Left: icon + title/company ───────────────────────────────────── */}
+      <div
+        className={[
+          // Shared
+          "flex w-full gap-3",
+          // < 500px: stack vertically, left-align everything
+          "flex-col items-start",
+          // ≥ 500px: single row like desktop
+          "[@media(min-width:500px)]:flex-row",
+          "[@media(min-width:500px)]:items-center",
+          "[@media(min-width:500px)]:justify-between",
+          "[@media(min-width:500px)]:gap-4",
+        ].join(" ")}
+      >
+        {/* Left: icon + title/company ────────────────────────────────── */}
         {/*
-          min-w-0 is critical: without it the flex child refuses to shrink
-          below its content size, pushing the period badge off screen on
-          narrow viewports.
-          flex-1 lets this group take remaining space after the period badge.
+          On all widths this is a flex-row.
+          min-w-0 + flex-1 lets it compress so the period badge always fits
+          on ≥500px without overflow.
         */}
-        <div className="flex items-center gap-3 sm:gap-5 min-w-0 flex-1">
+        <div className="flex flex-row items-center gap-3 sm:gap-5 min-w-0 flex-1 w-full [@media(min-width:500px)]:w-auto">
 
-          {/* Icon with glow + ring ──────────────────────────────────────── */}
-          {/*
-            Removed scale-90 sm:scale-100 — transform scale doesn't reclaim
-            layout space so it left a phantom gap on mobile. Instead we use
-            actual smaller size classes: w-12 h-12 mobile, w-16 h-16 sm+.
-            Same visual result, no phantom gap, no layout fight.
-          */}
+          {/* Icon with glow + ring */}
           <div
             className="relative shrink-0 transition-all duration-300"
             style={{
@@ -134,7 +122,6 @@ export function ExperienceItem({ exp }: ExperienceItemProps) {
                 : "none",
             }}
           >
-            {/* Hover ring — preserved exactly */}
             <div
               className="absolute inset-0 rounded-full transition-all duration-300 pointer-events-none"
               style={{
@@ -146,7 +133,6 @@ export function ExperienceItem({ exp }: ExperienceItemProps) {
             <div
               className={[
                 "rounded-full flex items-center justify-center",
-                // Actual size responsive — no transform tricks
                 "w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16",
                 exp.iconColor,
               ].join(" ")}
@@ -155,14 +141,9 @@ export function ExperienceItem({ exp }: ExperienceItemProps) {
             </div>
           </div>
 
-          {/* Title + Company ────────────────────────────────────────────── */}
-          {/*
-            min-w-0 on parent + break-words on h3 instead of truncate:
-            truncate silently clips content. break-words shows it all.
-            Title scales: 18px mobile → 20px sm → 30px md+
-          */}
-          <div className="min-w-0">
-            <h3 className="text-[1.1rem] sm:text-xl md:text-3xl font-semibold text-white leading-tight break-words">
+          {/* Title + Company */}
+          <div className="min-w-0 flex-1">
+            <h3 className="text-[1.05rem] [@media(min-width:500px)]:text-xl md:text-3xl font-semibold text-white leading-tight break-words">
               {exp.title}
             </h3>
             <p className="text-gray-400 text-xs sm:text-sm mt-0.5 truncate">
@@ -171,36 +152,49 @@ export function ExperienceItem({ exp }: ExperienceItemProps) {
           </div>
         </div>
 
-        {/* Divider — desktop only, preserved exactly */}
-        <div className="hidden sm:block w-8 h-0.5 bg-gray-500 rounded-full shrink-0" />
+        {/* Divider — only visible ≥ 500px (same as original sm:block) */}
+        <div className="hidden [@media(min-width:500px)]:block w-8 h-0.5 bg-gray-500 rounded-full shrink-0" />
 
-        {/* Right: period badge ────────────────────────────────────────────── */}
+        {/* Period badge ───────────────────────────────────────────────── */}
         {/*
-          shrink-0 so it never gets compressed by the title on narrow screens.
-          whitespace-nowrap so "Jan 2023 – Present" never wraps mid-phrase.
-          Badge styling preserved exactly from original.
+          < 500px: sits on its own line, left-aligned under the icon+title row.
+                   Uses pill styling (bg-white/5, border, rounded-full) so it
+                   reads as a distinct metadata tag — visually clean, not floating.
+                   Left-aligned (not centered) per your requirement.
+
+          ≥ 500px: right-aligned, transparent background — exactly as desktop.
         */}
-        <div className="shrink-0 flex items-center">
-          <span className="text-gray-400 sm:text-white text-xs sm:text-sm md:text-base whitespace-nowrap px-3 py-1 bg-white/5 sm:bg-transparent rounded-full border border-white/5 sm:border-0 font-medium">
+        <div className="shrink-0 flex items-center pl-[3.75rem] [@media(min-width:500px)]:pl-0">
+          <span
+            className={[
+              "font-medium whitespace-nowrap",
+              "text-xs [@media(min-width:500px)]:text-sm md:text-base",
+              // Always show pill on < 500px; transparent on ≥ 500px (sm+)
+              "px-3 py-1 rounded-full",
+              "text-gray-400 bg-white/5 border border-white/5",
+              "[@media(min-width:500px)]:text-white",
+              "[@media(min-width:500px)]:bg-transparent",
+              "[@media(min-width:500px)]:border-0",
+              "[@media(min-width:500px)]:px-0",
+              "[@media(min-width:500px)]:py-0",
+              "[@media(min-width:500px)]:rounded-none",
+            ].join(" ")}
+          >
             {exp.period}
           </span>
         </div>
       </div>
 
-      {/* ── Expandable description ─────────────────────────────────────────── */}
+      {/* ── Expandable description — CSS Grid 0fr → 1fr ─────────────────── */}
       {/*
-        CSS Grid 0fr → 1fr replaces maxHeight:"180px":
-        - No clipping (works for any description length)
-        - No JS ResizeObserver needed
-        - GPU composited → zero layout recalc lag on any screen
+        Behavior is 100% identical on all screen sizes — the isOpen state
+        is shared, so hover on desktop and tap on mobile both use the same
+        expand/collapse logic.
 
-        Horizontal padding:
-        Original had px-[40px] on the wrapper (80px total) which on 320px
-        phones left only 240px for text. Now responsive:
-        - Mobile: pl-[3.75rem] = icon(w-12=48px) + gap(gap-3=12px) = 60px → aligns under title
-        - sm:    pl-[4.75rem] = icon(w-14=56px) + gap(gap-5=20px) = 76px
-        - md:    pl-[5.25rem] = icon(w-16=64px) + gap(gap-5=20px) = 84px
-        Right padding stays pr-4 so text doesn't crowd the edge.
+        Description indent aligns under title text (icon width + gap):
+        - < 500px / mobile: pl-[3.75rem]  (w-12=48px + gap-3=12px = 60px)
+        - sm:               pl-[4.75rem]  (w-14=56px + gap-5=20px = 76px)
+        - md:               pl-[5.25rem]  (w-16=64px + gap-5=20px = 84px)
       */}
       <div
         aria-hidden={!isOpen}
@@ -215,9 +209,7 @@ export function ExperienceItem({ exp }: ExperienceItemProps) {
             className={[
               "text-gray-400 text-sm leading-relaxed",
               "pt-4 pr-4",
-              // Aligns description text under the title (not the icon)
               "pl-[3.75rem] sm:pl-[4.75rem] md:pl-[5.25rem]",
-              // Slide-in preserved from original
               "transition-transform duration-500 ease-in-out",
             ].join(" ")}
             style={{
