@@ -64,7 +64,7 @@ export function ServiceAccordion({ services }: { services: ServiceItem[] }) {
           <section
             id={`service-content-${index}`}
             aria-labelledby={`service-header-${index}`}
-            className={`overflow-hidden transition-all duration-300 ease-out ${
+            className={`overflow-hidden transition-all duration-500 ease-out ${
               expandedService === index
                 ? "max-h-[1200px] opacity-100" // Increased max-height to accommodate more tags
                 : "max-h-0 opacity-0"
