@@ -143,7 +143,7 @@ export function ExperienceItem({ exp }: ExperienceItemProps) {
 
           {/* Title + Company */}
           <div className="sm:min-w-fit min-w-0 flex-1">
-            <h3 className="sm:w-fit text-[1.05rem] [@media(min-width:500px)]:text-xl sm:text-2xl md:text-3xl font-semibold text-white leading-tight break-words">
+            <h3 className="sm:w-fit text-[1.05rem] [@media(min-width:500px)]:text-2xl md:text-3xl font-semibold text-white leading-tight break-words">
               {exp.title}
             </h3>
             <p className="text-gray-400 text-xs sm:text-sm mt-0.5 truncate sm:w-fit">
