@@ -105,37 +105,22 @@ export function ExperienceItem({ exp }: ExperienceItemProps) {
         </div>
       </div>
 
-      {/* Expandable description */}
+      {/* Expandable description - Always visible on mobile, hover on desktop */}
       <div
-        className="overflow-hidden px-[40px] transition-all duration-500 ease-in-out"
+        className="overflow-hidden px-[40px] transition-all duration-500 ease-in-out sm:px-[40px]"
         style={{
-          maxHeight: (isExpanded || isHovered) ? "300px" : "0px",
-          opacity: (isExpanded || isHovered) ? 1 : 0,
+          maxHeight: (isExpanded || isHovered || window.innerWidth < 640) ? "300px" : "0px",
+          opacity: (isExpanded || isHovered || window.innerWidth < 640) ? 1 : 0,
         }}
       >
         <p
           className="text-gray-400 text-sm leading-relaxed pt-4 sm:pl-20 pr-2 transition-transform duration-500 ease-in-out"
           style={{
-            transform: (isExpanded || isHovered) ? "translateY(0)" : "translateY(-10px)",
+            transform: (isExpanded || isHovered || window.innerWidth < 640) ? "translateY(0)" : "translateY(-10px)",
           }}
         >
           {exp.description}
         </p>
-      </div>
-
-      {/* Mobile expand indicator */}
-      <div className="sm:hidden px-4 mt-2">
-        <span className="text-xs text-gray-500 flex items-center gap-1">
-          {isExpanded ? 'Tap to collapse' : 'Tap for details'}
-          <svg 
-            className={`w-3 h-3 transition-transform ${isExpanded ? 'rotate-180' : ''}`} 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </span>
       </div>
     </button>
   );
