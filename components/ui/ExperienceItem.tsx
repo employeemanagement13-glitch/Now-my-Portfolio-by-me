@@ -148,7 +148,7 @@ export function ExperienceItem({ exp }: ExperienceItemProps) {
           Mobile: full-width centered pill to make it visually clear and tappable.
           sm+: right-aligned, no pill styling (matches original).
         */}
-        <div className="flex items-center justify-center sm:justify-end shrink-0">
+        <div className="flex items-center justify-start sm:justify-end shrink-0">
           <span className="text-gray-400 sm:text-white text-xs sm:text-sm md:text-base whitespace-nowrap px-3 py-1 bg-white/5 sm:bg-transparent rounded-full border border-white/5 sm:border-0 font-medium">
             {exp.period}
           </span>
