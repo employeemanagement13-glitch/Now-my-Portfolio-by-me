@@ -33,16 +33,16 @@ export function ExperienceItem({ exp }: ExperienceItemProps) {
           setIsHovered(!isHovered);
         }
       }}
-      className="relative rounded-2xl cursor-pointer transition-all duration-300 ease-in-out mx-auto outline-none focus-visible:ring-2 focus-visible:ring-purple-500/50 w-full text-left border-none block"
+      className="relative block rounded-2xl cursor-pointer transition-all duration-300 ease-in-out mx-auto outline-none focus-visible:ring-2 focus-visible:ring-purple-500/50 w-full max-w-3xl text-left border-none"
       style={{
         background: isHovered ? "rgba(255,255,255,0.04)" : "transparent",
         padding: "20px 0px",
       }}
     >
       {/* Main row */}
-      <div className="flex flex-col sm:flex-row items-center justify-around gap-6 sm:gap-4 flex-wrap sm:flex-nowrap px-4 sm:px-0">
+      <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-4 flex-wrap px-4 lg:px-6">
         {/* Left: icon + title/company */}
-        <div className="flex items-center gap-4 sm:gap-5 w-full sm:w-fit justify-center sm:justify-start">
+        <div className="flex items-center gap-4 sm:gap-5 w-full md:w-fit justify-center md:justify-start">
           {/* Icon circle */}
           <div
             className="relative shrink-0 transition-all duration-300 scale-90 sm:scale-100"
@@ -60,27 +60,27 @@ export function ExperienceItem({ exp }: ExperienceItemProps) {
               }}
             />
             <div
-              className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full ${exp.iconColor} flex items-center justify-center`}
+              className={`w-14 h-14 sm:w-16 sm:h-16 xl:w-20 xl:h-20 rounded-full ${exp.iconColor} flex items-center justify-center`}
             >
               <AsteriskIcon />
             </div>
           </div>
 
           {/* Title + Company */}
-          <div className="min-w-0">
-            <h3 className="text-xl sm:text-3xl font-semibold text-white leading-tight truncate">
+          <div className="min-w-0 text-center md:text-left">
+            <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-white leading-tight truncate">
               {exp.title}
             </h3>
-            <p className="text-gray-400 text-xs sm:text-sm mt-0.5">
+            <p className="text-gray-400 text-xs sm:text-sm lg:text-base mt-0.5">
               {exp.company}
             </p>
           </div>
         </div>
 
-        <div className="hidden sm:block w-8 h-0.5 bg-gray-500 rounded-full shrink-0" />
+        <div className="hidden md:block w-8 h-0.5 bg-gray-500 rounded-full shrink-0" />
         {/* Right: dash + period */}
-        <div className="flex items-center gap-4 w-full sm:w-fit justify-center sm:justify-end">
-          <span className="text-gray-400 sm:text-white text-xs sm:text-sm md:text-base whitespace-nowrap px-3 py-1 bg-white/5 sm:bg-transparent rounded-full border border-white/5 sm:border-0 font-medium">
+        <div className="flex items-center gap-4 w-full md:w-fit justify-center md:justify-end">
+          <span className="text-gray-400 sm:text-white text-xs sm:text-sm md:text-base lg:text-lg whitespace-nowrap px-3 py-1 bg-white/5 sm:bg-transparent rounded-full border border-white/5 sm:border-0 font-medium">
             {exp.period}
           </span>
         </div>
@@ -88,14 +88,14 @@ export function ExperienceItem({ exp }: ExperienceItemProps) {
 
       {/* Expandable description — slides down on hover */}
       <div
-        className="overflow-hidden px-[40px] transition-all duration-500 ease-in-out"
+        className="overflow-hidden px-4 lg:px-10 transition-all duration-500 ease-in-out"
         style={{
           maxHeight: isHovered ? "180px" : "0px",
           opacity: isHovered ? 1 : 0,
         }}
       >
         <p
-          className="text-gray-400 text-sm leading-relaxed pt-4 sm:pl-20 pr-2 transition-transform duration-500 ease-in-out"
+          className="text-gray-400 text-sm sm:text-base leading-relaxed pt-4 md:pl-16 lg:pl-20 pr-2 transition-transform duration-500 ease-in-out"
           style={{
             transform: isHovered ? "translateY(0)" : "translateY(-10px)",
           }}
