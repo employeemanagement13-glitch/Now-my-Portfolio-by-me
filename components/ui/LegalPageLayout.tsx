@@ -79,7 +79,7 @@ export function LegalPageLayout({
               {title}
             </h1>
 
-            <p className="text-gray-400 text-sm leading-relaxed max-w-xl mx-auto px-2 sm:px-0">
+            <p className="text-gray-400 text-sm md:text-base leading-relaxed max-w-xl mx-auto px-2 sm:px-0">
               {description}
             </p>
 
