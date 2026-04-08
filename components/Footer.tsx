@@ -12,7 +12,7 @@ export default function Footer() {
               (+92) 371 0720726
             </a>
             <a href="mailto:officialshahzil@gmail.com" className="block text-white hover:text-red-500 transition-all duration-200 text-[16px] sm:text-lg font-medium">
-              officialshahzil@gmail.com
+              helloshahzil@gmail.com
             </a>
           </div>
 
